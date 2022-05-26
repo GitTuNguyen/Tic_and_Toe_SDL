@@ -91,7 +91,7 @@ void Board::UpdateGameResult(int i_X, int i_Y, CellType i_moveType)
 	{
 		if (m_boardData[i_X + i][i_Y + i] == m_boardData[i_X + i - 1][i_Y + i - 1])
 		{
-			count_2++;
+			count_3++;
 		}
 		else break;
 	}
@@ -99,7 +99,7 @@ void Board::UpdateGameResult(int i_X, int i_Y, CellType i_moveType)
 	{
 		if (m_boardData[i_X - i][i_Y - i] == m_boardData[i_X - i + 1][i_Y - i + 1])
 		{
-			count_2++;
+			count_3++;
 		}
 		else break;
 	}
@@ -107,7 +107,7 @@ void Board::UpdateGameResult(int i_X, int i_Y, CellType i_moveType)
 	{
 		if (m_boardData[i_X - i][i_Y + i] == m_boardData[i_X - i + 1][i_Y + i - 1])
 		{
-			count_2++;
+			count_4++;
 		}
 		else break;
 	}
@@ -115,7 +115,7 @@ void Board::UpdateGameResult(int i_X, int i_Y, CellType i_moveType)
 	{
 		if (m_boardData[i_X + i][i_Y - i] == m_boardData[i_X + i - 1][i_Y - i + 1])
 		{
-			count_2++;
+			count_4++;
 		}
 		else break;
 	}
@@ -125,7 +125,7 @@ void Board::UpdateGameResult(int i_X, int i_Y, CellType i_moveType)
 	}
 	if (isLastPlayerWin)
 	{
-		if (i_moveType == 'X')
+		if (i_moveType == CellType::X)
 		{
 			m_gameResult = GameResult::X_WIN;
 		}

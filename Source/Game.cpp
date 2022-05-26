@@ -126,9 +126,9 @@ void Game::Update()
 						newRect.x = mainEvent.motion.x;
 						newRect.y = mainEvent.motion.y;
 
-						if (newRect.x % 40 != 0 && newRect.y % 40 != 0)
+						if (newRect.x % 40 != 0 && newRect.y % 40 != 0 && m_board->ValidateMove(floor( newRect.x / 40), floor(newRect.y / 40 )))
 						{
-							UpdateMove(newRect.x / 40, newRect.y / 40);
+							UpdateMove(floor(newRect.x / 40), floor( newRect.y / 40));
 						}
 					}
 					default:
@@ -157,11 +157,13 @@ void Game::Update()
 
 void Game::UpdateMove(int i_X, int i_Y)
 {
+	/*
 	bool isValidMove = false;
 	while (!isValidMove)
 	{	
 		isValidMove = m_board->ValidateMove(i_X, i_Y);
 	}
+	*/
 	m_board->Update(i_X, i_Y, m_currentMoveType);
 	m_currentMoveType = m_currentMoveType == CellType::X ? CellType::O : CellType::X;
 }
