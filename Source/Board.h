@@ -15,9 +15,6 @@ enum CellType {
 	X,
 	O
 };
-#define TABLE_ROW 10
-#define TABLE_COL 10
-#define TABLE_SIZE (TABLE_ROW * TABLE_COL)
 class Board {	
 private:
 	CellType** m_boardData;
@@ -28,7 +25,6 @@ public:
 	void Reset();
 	GameResult GetGameResult();
 	CellType** getBoardData();
-	//void Render();
 	void Update(int i_X, int i_Y, CellType i_moveType);
 	void UpdateGameResult(int i_X, int i_Y, CellType i_moveType);
 	bool ValidateMove(int i_X, int i_Y);

@@ -1,4 +1,4 @@
-#define SDL_MAIN_HANDLED
+#include "GameConst.h"
 #include "Game.h"
 
 void main()
@@ -6,6 +6,4 @@ void main()
 	Game* game = new Game();
 
 	game->Update();
-
-	getchar();
 }

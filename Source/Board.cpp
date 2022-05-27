@@ -15,9 +15,9 @@ void Board::Reset()
 	for (int i = 0; i < TABLE_ROW; i++) {
 		m_boardData[i] = (CellType*)malloc(sizeof(CellType) * TABLE_COL);
 	}
-	for (int i = 0; i < TABLE_COL; i++)
+	for (int i = 0; i < TABLE_ROW ; i++)
 	{
-		for (int j = 0; j < TABLE_ROW; j++)
+		for (int j = 0; j < TABLE_COL; j++)
 		{
 			m_boardData[i][j] = CellType::UNDEFINED;
 		}
@@ -31,23 +31,6 @@ GameResult  Board::GetGameResult()
 {
 	return m_gameResult;
 }
-
-/*
-* void Board::Render()
-{
-	const char* gameName1 = "\t\t\t      GAME---TIC---TAC---TOE \n";
-	const char* gameName2 = "\t\t\t\t FOR\t 2    Player\n\n";
-	const char* guideGame = "\t\t PLAYER - 1 [X] \t - \tPLAYER - 2 [O]\n\n";
-	cout << gameName1 << gameName2 << guideGame;
-	cout << k_padding << k_padding << "   +---+---+---+\n";
-	cout << k_padding << k_padding << "   | " << m_boardData[0] << " | " << m_boardData[1] << " | " << m_boardData[2] << " |\n";
-	cout << k_padding << k_padding << "   +---+---+---+\n";
-	cout << k_padding << k_padding << "   | " << m_boardData[3] << " | " << m_boardData[4] << " | " << m_boardData[5] << " |\n";
-	cout << k_padding << k_padding << "   +---+---+---+\n";
-	cout << k_padding << k_padding << "   | " << m_boardData[6] << " | " << m_boardData[7] << " | " << m_boardData[8] << " |\n";
-	cout << k_padding << k_padding << "   +---+---+---+\n\n";
-}
-*/
 void Board::UpdateGameResult(int i_X, int i_Y, CellType i_moveType)
 {
 	bool isLastPlayerWin = false;
@@ -87,7 +70,7 @@ void Board::UpdateGameResult(int i_X, int i_Y, CellType i_moveType)
 		}
 		else break;
 	}
-	for (int i = 1; i <= 4 && i_X + i < TABLE_COL && i_Y + i < TABLE_COL ; i++)
+	for (int i = 1; i <= 4 && i_X + i < TABLE_ROW && i_Y + i < TABLE_COL ; i++)
 	{
 		if (m_boardData[i_X + i][i_Y + i] == m_boardData[i_X + i - 1][i_Y + i - 1])
 		{
@@ -111,7 +94,7 @@ void Board::UpdateGameResult(int i_X, int i_Y, CellType i_moveType)
 		}
 		else break;
 	}
-	for (int i = 1; i <= 4 && i_X + i < TABLE_COL && i_Y - i >= 0; i++)
+	for (int i = 1; i <= 4 && i_X + i < TABLE_ROW && i_Y - i >= 0; i++)
 	{
 		if (m_boardData[i_X + i][i_Y - i] == m_boardData[i_X + i - 1][i_Y - i + 1])
 		{

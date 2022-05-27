@@ -1,3 +1,8 @@
 #pragma once
-#include <sstream>
-const std::string k_padding = "\t\t";
+#define SDL_MAIN_HANDLED
+#define TABLE_ROW 10
+#define TABLE_COL 15
+#define TABLE_SIZE (TABLE_ROW * TABLE_COL)
+#define TABLE_CELL_SIZE 40
+#define WINDOW_WIDTH (TABLE_CELL_SIZE * TABLE_COL)
+#define WINDOW_HEIGHT (TABLE_CELL_SIZE * TABLE_ROW)
