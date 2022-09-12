@@ -24,6 +24,7 @@
     <ProjectGuid>{fb6dbfeb-5421-4045-84b1-610aeaa41b28}</ProjectGuid>
     <RootNamespace>CoCaro</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>TicAndToeSDL</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

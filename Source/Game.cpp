@@ -90,3 +90,9 @@ void Game::UpdateMove(int i_X, int i_Y)
 	m_board->Update(i_X, i_Y, m_currentMoveType);
 	m_currentMoveType = m_currentMoveType == CellType::X ? CellType::O : CellType::X;
 }
+
+Game::~Game()
+{
+	delete m_board;
+	delete m_renderer;
+}

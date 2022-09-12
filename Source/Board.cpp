@@ -102,7 +102,7 @@ void Board::UpdateGameResult(int i_X, int i_Y, CellType i_moveType)
 		}
 		else break;
 	}
-	if (count_1 == 5 || count_2 == 5 || count_3 == 5 || count_4 == 5)
+	if (count_1 >= 5 || count_2 >= 5 || count_3 >= 5 || count_4 >= 5)
 	{
 		isLastPlayerWin = true;
 	}

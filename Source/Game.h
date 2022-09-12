@@ -5,6 +5,7 @@ class Game {
 public:
 	Game();
 	void Update();
+	~Game();
 private:
 	void DrawBoad();
 	void CreateNewMatch();
