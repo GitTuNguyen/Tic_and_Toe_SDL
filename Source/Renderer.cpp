@@ -92,7 +92,7 @@ void Renderer::LoadTexture(string i_ImageName)
 {
 	SDL_Surface* tempSurface = NULL;
 	SDL_Texture* texture = NULL;
-	string str = i_ImageName + ".bmp";
+	string str = "./Data/" + i_ImageName + ".bmp";
 	tempSurface = SDL_LoadBMP(str.c_str());	
 	texture = SDL_CreateTextureFromSurface(m_sdlRenderer, tempSurface);
 	SDL_FreeSurface(tempSurface);
