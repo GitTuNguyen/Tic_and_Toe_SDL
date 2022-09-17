@@ -28,7 +28,7 @@ Renderer::Renderer()
 		
 }
 
-void Renderer::DrawCell(CellType i_cellType, int i_pixelX, int i_pixelY)
+void Renderer::DrawCell(MoveType i_cellType, int i_pixelX, int i_pixelY)
 {
 	SDL_Rect newRect;
 	newRect.w = TABLE_CELL_SIZE - 1;
@@ -36,11 +36,11 @@ void Renderer::DrawCell(CellType i_cellType, int i_pixelX, int i_pixelY)
 	newRect.x = i_pixelX + 1;
 	newRect.y = i_pixelY + 1;
 
-	if (i_cellType == CellType::X)
+	if (i_cellType == MoveType::X)
 	{
 		SDL_RenderCopy(m_sdlRenderer, m_loadedTextures["X"], NULL, &newRect);
 	}
-	else if (i_cellType == CellType::O)
+	else if (i_cellType == MoveType::O)
 	{
 		SDL_RenderCopy(m_sdlRenderer, m_loadedTextures["O"], NULL, &newRect);
 	}
@@ -78,13 +78,14 @@ void Renderer::PostFrame()
 
 void Renderer::CleanUp()
 {
+	SDL_DestroyRenderer(m_sdlRenderer);
+
+	//cleans up all initialized subsystems
 
 	SDL_DestroyWindow(m_window);
 
 	//Destroy a renderer
-	SDL_DestroyRenderer(m_sdlRenderer);
-
-	//cleans up all initialized subsystems
+	
 	SDL_Quit();
 }
 

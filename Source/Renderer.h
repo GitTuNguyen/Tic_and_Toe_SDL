@@ -8,7 +8,7 @@ class Renderer
 {
 public:
 	Renderer();
-	void DrawCell(CellType i_cellType, int i_pixelX, int i_pixelY);
+	void DrawCell(MoveType i_cellType, int i_pixelX, int i_pixelY);
 	void DrawTable();
 	void PostFrame();
 	void CleanUp();

@@ -13,7 +13,7 @@ private:
 	void Rematch();
 	Board* m_board;
 	Renderer* m_renderer;
-	CellType m_currentMoveType;
+	MoveType m_currentMoveType;
 	bool m_isPlayerWantExit;
 	SDL_Event mainEvent;
 };

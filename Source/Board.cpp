@@ -5,21 +5,21 @@ Board::Board()
 	Reset();
 }
 
-CellType** Board::getBoardData()
+MoveType** Board::getBoardData()
 {
 	return m_boardData;
 }
 void Board::Reset()
 {
-	m_boardData = (CellType**)malloc(sizeof(CellType*) * TABLE_ROW);
+	m_boardData = (MoveType**)malloc(sizeof(MoveType*) * TABLE_ROW);
 	for (int i = 0; i < TABLE_ROW; i++) {
-		m_boardData[i] = (CellType*)malloc(sizeof(CellType) * TABLE_COL);
+		m_boardData[i] = (MoveType*)malloc(sizeof(MoveType) * TABLE_COL);
 	}
 	for (int i = 0; i < TABLE_ROW ; i++)
 	{
 		for (int j = 0; j < TABLE_COL; j++)
 		{
-			m_boardData[i][j] = CellType::UNDEFINED;
+			m_boardData[i][j] = MoveType::UNDEFINED;
 		}
 		
 	}
@@ -31,7 +31,7 @@ GameResult  Board::GetGameResult()
 {
 	return m_gameResult;
 }
-void Board::UpdateGameResult(int i_X, int i_Y, CellType i_moveType)
+void Board::UpdateGameResult(int i_X, int i_Y, MoveType i_moveType)
 {
 	bool isLastPlayerWin = false;
 	size_t count_1 = 1;
@@ -108,7 +108,7 @@ void Board::UpdateGameResult(int i_X, int i_Y, CellType i_moveType)
 	}
 	if (isLastPlayerWin)
 	{
-		if (i_moveType == CellType::X)
+		if (i_moveType == MoveType::X)
 		{
 			m_gameResult = GameResult::X_WIN;
 		}
@@ -125,7 +125,7 @@ void Board::UpdateGameResult(int i_X, int i_Y, CellType i_moveType)
 		m_gameResult = GameResult::NONE;
 	}
 }
-void Board::Update(int i_X, int i_Y, CellType i_moveType)
+void Board::Update(int i_X, int i_Y, MoveType i_moveType)
 {
 	m_boardData[i_X][i_Y] = i_moveType;
 	++m_movesPlayed;
@@ -133,8 +133,8 @@ void Board::Update(int i_X, int i_Y, CellType i_moveType)
 }
 bool Board::ValidateMove(int i_X, int i_Y)
 {
-	CellType valueCurrentPlay = m_boardData[i_X][i_Y];
-	if (valueCurrentPlay == CellType::X || valueCurrentPlay == CellType::O)
+	MoveType valueCurrentPlay = m_boardData[i_X][i_Y];
+	if (valueCurrentPlay == MoveType::X || valueCurrentPlay == MoveType::O)
 	{
 		return false;
 	}

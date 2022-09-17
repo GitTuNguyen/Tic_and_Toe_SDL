@@ -7,7 +7,7 @@ Game::Game()
 {
 	m_board = new Board();
 	m_renderer = new Renderer();
-	m_currentMoveType = CellType::X;
+	m_currentMoveType = MoveType::X;
 	m_isPlayerWantExit = false;
 	m_renderer->LoadTexture("X");
 	m_renderer->LoadTexture("O");
@@ -33,7 +33,7 @@ void Game::Rematch()
 void Game::DrawBoad()
 {
 
-	CellType** boardData = m_board->getBoardData();
+	MoveType** boardData = m_board->getBoardData();
 	for (int i = 0; i < TABLE_ROW; i++)
 	{
 		for (int j = 0; j < TABLE_COL; j++)
@@ -88,7 +88,7 @@ void Game::Update()
 void Game::UpdateMove(int i_X, int i_Y)
 {
 	m_board->Update(i_X, i_Y, m_currentMoveType);
-	m_currentMoveType = m_currentMoveType == CellType::X ? CellType::O : CellType::X;
+	m_currentMoveType = m_currentMoveType == MoveType::X ? MoveType::O : MoveType::X;
 }
 
 Game::~Game()

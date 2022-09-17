@@ -10,22 +10,22 @@ enum GameResult
 	O_WIN,
 	DRAW
 };
-enum CellType {
+enum MoveType {
 	UNDEFINED,
 	X,
 	O
 };
 class Board {	
 private:
-	CellType** m_boardData;
+	MoveType** m_boardData;
 	GameResult m_gameResult;
 	size_t m_movesPlayed;
 public:
 	Board();
 	void Reset();
 	GameResult GetGameResult();
-	CellType** getBoardData();
-	void Update(int i_X, int i_Y, CellType i_moveType);
-	void UpdateGameResult(int i_X, int i_Y, CellType i_moveType);
+	MoveType** getBoardData();
+	void Update(int i_X, int i_Y, MoveType i_moveType);
+	void UpdateGameResult(int i_X, int i_Y, MoveType i_moveType);
 	bool ValidateMove(int i_X, int i_Y);
 };
