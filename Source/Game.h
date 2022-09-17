@@ -10,9 +10,10 @@ public:
 	~Game();
 private:
 	void DrawBoad();
+	void DrawGameOverScreen();
 	void CreateNewMatch();
 	void UpdateMove(int i_X, int i_Y);
-	void Rematch();
+	void Rematch(int i_mouse_X, int i_mouse_Y);
 	Board* m_board;
 	Renderer* m_renderer;
 	MoveType m_currentMoveType;

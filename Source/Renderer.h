@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL.h>
+#include <SDL_ttf.h>
 #include "Board.h"
 #include <map>
 #include <string>
@@ -11,6 +12,8 @@ public:
 	Renderer();
 	void DrawCell(MoveType i_cellType, int i_pixelX, int i_pixelY);
 	void DrawTable();
+	void DrawText(std::string i_text, int i_size, int i_X, int i_Y, int i_H, int i_W);
+	void DrawGameOverPopup();
 	void PostFrame();
 	void CleanUp();
 	void LoadTexture(string i_imageName);
