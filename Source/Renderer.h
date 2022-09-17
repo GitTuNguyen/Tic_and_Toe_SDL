@@ -4,6 +4,7 @@
 #include "Board.h"
 #include <map>
 #include <string>
+
 class Renderer
 {
 public:

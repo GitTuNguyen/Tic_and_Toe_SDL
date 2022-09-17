@@ -1,6 +1,8 @@
 #pragma once
 #include "Board.h"
 #include "Renderer.h"
+#include <vector>
+
 class Game {
 public:
 	Game();

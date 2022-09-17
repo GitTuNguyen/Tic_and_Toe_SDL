@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdlib.h>
 using namespace std;
+
 enum GameResult
 {
 	NONE,
@@ -10,11 +11,13 @@ enum GameResult
 	O_WIN,
 	DRAW
 };
+
 enum MoveType {
 	UNDEFINED,
 	X,
 	O
 };
+
 class Board {	
 private:
 	MoveType** m_boardData;

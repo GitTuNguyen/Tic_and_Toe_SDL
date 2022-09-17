@@ -9,14 +9,18 @@ Game::Game()
 	m_renderer = new Renderer();
 	m_currentMoveType = MoveType::X;
 	m_isPlayerWantExit = false;
-	m_renderer->LoadTexture("X");
-	m_renderer->LoadTexture("O");
+	std::vector<string> gameTextures{ "X", "O" };
+	for (string texture : gameTextures)
+	{
+		m_renderer->LoadTexture(texture);
+	}
 }
 
 void Game::CreateNewMatch()
 {
 	m_board->Reset();
 }
+
 void Game::Rematch()
 {
 	char inputPlayer;
@@ -30,6 +34,7 @@ void Game::Rematch()
 		m_isPlayerWantExit = true;
 	}
 }
+
 void Game::DrawBoad()
 {
 
@@ -42,6 +47,7 @@ void Game::DrawBoad()
 		}
 	}
 }
+
 void Game::Update()
 {
 	while (!m_isPlayerWantExit)
@@ -85,6 +91,7 @@ void Game::Update()
 	}
 	m_renderer->CleanUp();
 }
+
 void Game::UpdateMove(int i_X, int i_Y)
 {
 	m_board->Update(i_X, i_Y, m_currentMoveType);

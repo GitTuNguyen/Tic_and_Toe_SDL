@@ -9,6 +9,7 @@ MoveType** Board::getBoardData()
 {
 	return m_boardData;
 }
+
 void Board::Reset()
 {
 	m_boardData = (MoveType**)malloc(sizeof(MoveType*) * TABLE_ROW);
@@ -31,6 +32,7 @@ GameResult  Board::GetGameResult()
 {
 	return m_gameResult;
 }
+
 void Board::UpdateGameResult(int i_X, int i_Y, MoveType i_moveType)
 {
 	bool isLastPlayerWin = false;
@@ -125,12 +127,14 @@ void Board::UpdateGameResult(int i_X, int i_Y, MoveType i_moveType)
 		m_gameResult = GameResult::NONE;
 	}
 }
+
 void Board::Update(int i_X, int i_Y, MoveType i_moveType)
 {
 	m_boardData[i_X][i_Y] = i_moveType;
 	++m_movesPlayed;
 	UpdateGameResult(i_X, i_Y, i_moveType);
 }
+
 bool Board::ValidateMove(int i_X, int i_Y)
 {
 	MoveType valueCurrentPlay = m_boardData[i_X][i_Y];
