@@ -1,6 +1,7 @@
 #pragma once
 #include "Board.h"
 #include "Renderer.h"
+#include "InputManager.h"
 #include <vector>
 
 class Game {
@@ -16,7 +17,7 @@ private:
 	void Rematch(int i_mouse_X, int i_mouse_Y);
 	Board* m_board;
 	Renderer* m_renderer;
+	InputManager* m_inputManager;
 	MoveType m_currentMoveType;
 	bool m_isPlayerWantExit;
-	SDL_Event mainEvent;
 };

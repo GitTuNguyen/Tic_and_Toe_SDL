@@ -7,6 +7,7 @@ Game::Game()
 {
 	m_board = new Board();
 	m_renderer = new Renderer();
+	m_inputManager = new InputManager();
 	m_currentMoveType = MoveType::X;
 	m_isPlayerWantExit = false;
 	std::vector<string> gameTextures{ "X", "O", "YES", "NO"};
@@ -73,59 +74,27 @@ void Game::Update()
 	{
 		m_renderer->PreRendering();
 		m_renderer->DrawTable();
+		m_inputManager->UpdateInput();
+		m_isPlayerWantExit = m_inputManager->getIsQuit();
 		GameResult gameResult = m_board->GetGameResult();
 		if (gameResult == GameResult::NONE)
 		{
-			SDL_Rect newRect;
-			while (SDL_PollEvent(&mainEvent))
+			if (m_inputManager->getIsMouseDown())
 			{
-				switch (mainEvent.type)
+				int mouseX = m_inputManager->getMouseX();
+				int mouseY = m_inputManager->getMouseY();
+				if (mouseX % TABLE_CELL_SIZE != 0 && mouseY % TABLE_CELL_SIZE != 0 && m_board->ValidateMove(floor(mouseY / TABLE_CELL_SIZE), floor(mouseX / TABLE_CELL_SIZE)))
 				{
-				case SDL_QUIT:
-				{
-					m_isPlayerWantExit = true;
-					break;
+					UpdateMove(floor(mouseY / TABLE_CELL_SIZE), floor(mouseX / TABLE_CELL_SIZE));
 				}
-				case SDL_MOUSEBUTTONDOWN:
-				{
-					newRect.x = mainEvent.motion.x;
-					newRect.y = mainEvent.motion.y;
-					if (newRect.x % TABLE_CELL_SIZE != 0 && newRect.y % TABLE_CELL_SIZE != 0 && m_board->ValidateMove(floor(newRect.y / TABLE_CELL_SIZE), floor(newRect.x / TABLE_CELL_SIZE)))
-					{
-						UpdateMove(floor(newRect.y / TABLE_CELL_SIZE), floor(newRect.x / TABLE_CELL_SIZE));
-					}
-				}
-				default:
-				{
-					break;
-				}
-				}
-			}
+			}			
 			DrawBoad();
 		}
 		else {
-			DrawGameOverScreen();
-			SDL_Rect newRect;
-			while (SDL_PollEvent(&mainEvent))
+			DrawGameOverScreen();			
+			if (m_inputManager->getIsMouseDown())
 			{
-				switch (mainEvent.type)
-				{
-				case SDL_QUIT:
-				{
-					m_isPlayerWantExit = true;
-					break;
-				}
-				case SDL_MOUSEBUTTONDOWN:
-				{
-					newRect.x = mainEvent.motion.x;
-					newRect.y = mainEvent.motion.y;
-					Rematch(newRect.x, newRect.y);
-				}
-				default:
-				{
-					break;
-				}
-				}
+				Rematch(m_inputManager->getMouseX(), m_inputManager->getMouseY());
 			}
 		}
 		m_renderer->PostFrame();
@@ -143,4 +112,5 @@ Game::~Game()
 {
 	delete m_board;
 	delete m_renderer;
+	delete m_inputManager;
 }

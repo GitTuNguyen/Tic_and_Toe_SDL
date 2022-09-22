@@ -41,3 +41,12 @@
 #define NO_CELL_HEIGHT TABLE_CELL_SIZE
 #define NO_CELL_X (YES_CELL_X + TABLE_CELL_SIZE * 3)
 #define NO_CELL_Y YES_CELL_Y
+
+enum MouseButton
+{
+	MOUSE_LEFT,
+	MOUSE_RIGHT,
+
+	MOUSE_MAX   // No button, just to define max
+				// array size.
+};
