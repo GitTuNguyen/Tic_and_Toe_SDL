@@ -36,6 +36,8 @@ Renderer::Renderer()
 		SDL_Log("%s", TTF_GetError());
 		return;
 	}
+
+	m_mainFont = TTF_OpenFont("./Data/font.TTF", TEXT_SIZE);
 }
 
 void Renderer::DrawCell(MoveType i_cellType, int i_pixelX, int i_pixelY)
@@ -58,17 +60,15 @@ void Renderer::DrawCell(MoveType i_cellType, int i_pixelX, int i_pixelY)
 
 void Renderer::DrawText(std::string i_text, int i_size, int i_X, int i_Y, int i_H, int i_W)
 {
-	TTF_Font* font = TTF_OpenFont("./Data/font.TTF", i_size);
-	SDL_Color White = { 255, 255, 255 };
-	const char* renderText = i_text.c_str();
-	SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font, renderText, White);
+	SDL_Color whiteColor = { 255, 255, 255 };
+	SDL_Surface* surfaceMessage = TTF_RenderText_Solid(m_mainFont, i_text.c_str(), whiteColor);
 	SDL_Texture* message = SDL_CreateTextureFromSurface(m_sdlRenderer, surfaceMessage);
-	SDL_Rect Message_rect;
-	Message_rect.x = i_X;
-	Message_rect.y = i_Y;
-	Message_rect.w = i_W;
-	Message_rect.h = i_H;
-	SDL_RenderCopy(m_sdlRenderer, message, NULL, &Message_rect);
+	SDL_Rect messageRect;
+	messageRect.x = i_X;
+	messageRect.y = i_Y;
+	messageRect.w = i_W;
+	messageRect.h = i_H;
+	SDL_RenderCopy(m_sdlRenderer, message, NULL, &messageRect);
 	SDL_FreeSurface(surfaceMessage);
 	SDL_DestroyTexture(message);
 }
@@ -85,9 +85,9 @@ void Renderer::DrawGameOverPopup()
 
 	SDL_RenderFillRect(m_sdlRenderer, &newRect);
 
-	DrawText("GAME OVER", TEXT_GAME_OVER_SIZE, TEXT_GAME_OVER_X, TEXT_GAME_OVER_Y, TEXT_GAME_OVER_HEIGHT, TEXT_GAME_OVER_WIDTH);
+	DrawText("GAME OVER", TEXT_SIZE, TEXT_GAME_OVER_X, TEXT_GAME_OVER_Y, TEXT_GAME_OVER_HEIGHT, TEXT_GAME_OVER_WIDTH);
 	
-	DrawText("PLAY AGAIN?", TEXT_PLAY_AGAIN_SIZE, TEXT_PLAY_AGAIN_X, TEXT_PLAY_AGAIN_Y, TEXT_PLAY_AGAIN_HEIGHT, TEXT_PLAY_AGAIN_WIDTH);
+	DrawText("PLAY AGAIN?", TEXT_SIZE, TEXT_PLAY_AGAIN_X, TEXT_PLAY_AGAIN_Y, TEXT_PLAY_AGAIN_HEIGHT, TEXT_PLAY_AGAIN_WIDTH);
 
 	newRect.w = YES_BUTTON_WIDTH;
 	newRect.h = YES_BUTTON_HEIGHT;

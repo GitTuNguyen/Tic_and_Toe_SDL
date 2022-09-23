@@ -51,7 +51,7 @@ void Game::DrawGameOverScreen()
 	default:
 		break;
 	}
-	m_renderer->DrawText(game_result, TEXT_GAME_RESULT_SIZE, TEXT_GAME_RESULT_X, TEXT_GAME_RESULT_Y, TEXT_GAME_RESULT_HEIGHT, TEXT_GAME_RESULT_WIDTH);
+	m_renderer->DrawText(game_result, TEXT_SIZE, TEXT_GAME_RESULT_X, TEXT_GAME_RESULT_Y, TEXT_GAME_RESULT_HEIGHT, TEXT_GAME_RESULT_WIDTH);
 }
 
 void Game::Update()

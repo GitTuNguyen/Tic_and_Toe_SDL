@@ -21,6 +21,7 @@ public:
 private:
 	SDL_Window* m_window = NULL;
 	SDL_Renderer* m_sdlRenderer = NULL;
+	TTF_Font* m_mainFont = NULL;
 	map<string, SDL_Texture*> m_loadedTextures;
 };
 
