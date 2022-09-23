@@ -23,7 +23,7 @@ void Game::CreateNewMatch()
 void Game::DrawBoad()
 {
 
-	MoveType** boardData = m_board->getBoardData();
+	MoveType** boardData = m_board->GetBoardData();
 	for (int i = 0; i < TABLE_ROW; i++)
 	{
 		for (int j = 0; j < TABLE_COL; j++)
@@ -96,9 +96,9 @@ void Game::Update()
 	m_renderer->CleanUp();
 }
 
-void Game::UpdateMove(int i_X, int i_Y)
+void Game::UpdateMove(int i_x, int i_y)
 {
-	m_board->Update(i_X, i_Y, m_currentMoveType);
+	m_board->Update(i_x, i_y, m_currentMoveType);
 	m_currentMoveType = m_currentMoveType == MoveType::X ? MoveType::O : MoveType::X;
 }
 

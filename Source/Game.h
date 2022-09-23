@@ -2,7 +2,6 @@
 #include "Board.h"
 #include "Renderer.h"
 #include "InputManager.h"
-#include <vector>
 
 class Game {
 public:

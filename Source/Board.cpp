@@ -5,7 +5,7 @@ Board::Board()
 	Reset();
 }
 
-MoveType** Board::getBoardData()
+MoveType** Board::GetBoardData()
 {
 	return m_boardData;
 }
@@ -33,81 +33,51 @@ GameResult  Board::GetGameResult()
 	return m_gameResult;
 }
 
-void Board::UpdateGameResult(int i_X, int i_Y, MoveType i_moveType)
+int Board::CountSameMoveByDirection(int i_startCellX, int i_startCellY, Direction i_dir, int maxStep)
+{
+	int count = 0;
+	for (int i = 1; i <= maxStep; i++)
+	{
+		int nextCellX = i_startCellX + i_dir.x * i;
+		int nextCellY = i_startCellY + i_dir.y * i;
+		if (nextCellX < 0 || nextCellX >= TABLE_ROW || nextCellY < 0 || nextCellY >= TABLE_COL)
+		{
+			break;
+		}
+		else if (m_boardData[i_startCellX][i_startCellY] == m_boardData[nextCellX][nextCellY])
+		{
+			count++;
+		}
+		else {
+			break;
+		}
+	}
+	return count;
+}
+
+void Board::UpdateGameResult(int i_startCellX, int i_startCellY, MoveType i_moveType)
 {
 	bool isLastPlayerWin = false;
-	size_t count_1 = 1;
-	size_t count_2 = 1;
-	size_t count_3 = 1;
-	size_t count_4 = 1;
-	for (int i = 1; i <= 4 && i_Y + i < TABLE_COL; i++)
+
+	std::vector<Direction> directions;
+	directions.push_back(Direction(0, 1));
+	directions.push_back(Direction(1, 0));
+	directions.push_back(Direction(1, -1));
+	directions.push_back(Direction(1, 1));
+
+	for (Direction dir : directions)
 	{
-		if (m_boardData[i_X][i_Y + i] == m_boardData[i_X][i_Y + i - 1])
+		Direction oppositeDir = dir * -1;
+		int count = CountSameMoveByDirection(i_startCellX, i_startCellY, dir);
+		int oppositeCount = CountSameMoveByDirection(i_startCellX, i_startCellY, oppositeDir);
+		int finalCount = count + oppositeCount + 1;
+		if (finalCount >= 5)
 		{
-			count_1++;
+			isLastPlayerWin = true;
+			break;
 		}
-		else break;
 	}
-	for (int i = 1; i <= 4 && i_Y - i >= 0; i++)
-	{
-		if (m_boardData[i_X][i_Y - i] == m_boardData[i_X][i_Y - i + 1])
-		{
-			count_1++;
-		}
-		else break;
-	}
-	for (int i = 1; i <= 4 && i_X + i < TABLE_ROW; i++)
-	{
-		if (m_boardData[i_X + i][i_Y] == m_boardData[i_X + i - 1][i_Y])
-		{
-			count_2++;
-		}
-		else break;
-	}
-	for (int i = 1; i_X - i >= 0 && i <= 4; i++)
-	{
-		if (m_boardData[i_X - i][i_Y] == m_boardData[i_X - i + 1][i_Y])
-		{
-			count_2++;
-		}
-		else break;
-	}
-	for (int i = 1; i <= 4 && i_X + i < TABLE_ROW && i_Y + i < TABLE_COL ; i++)
-	{
-		if (m_boardData[i_X + i][i_Y + i] == m_boardData[i_X + i - 1][i_Y + i - 1])
-		{
-			count_3++;
-		}
-		else break;
-	}
-	for (int i = 1; i <= 4 && i_X - i >= 0 && i_Y - i >=0 ; i++)
-	{
-		if (m_boardData[i_X - i][i_Y - i] == m_boardData[i_X - i + 1][i_Y - i + 1])
-		{
-			count_3++;
-		}
-		else break;
-	}
-	for (int i = 1; i <= 4 && i_X - i >= 0 && i_Y + i < TABLE_COL; i++)
-	{
-		if (m_boardData[i_X - i][i_Y + i] == m_boardData[i_X - i + 1][i_Y + i - 1])
-		{
-			count_4++;
-		}
-		else break;
-	}
-	for (int i = 1; i <= 4 && i_X + i < TABLE_ROW && i_Y - i >= 0; i++)
-	{
-		if (m_boardData[i_X + i][i_Y - i] == m_boardData[i_X + i - 1][i_Y - i + 1])
-		{
-			count_4++;
-		}
-		else break;
-	}
-	if (count_1 >= 5 || count_2 >= 5 || count_3 >= 5 || count_4 >= 5)
-	{
-		isLastPlayerWin = true;
-	}
+
 	if (isLastPlayerWin)
 	{
 		if (i_moveType == MoveType::X)
@@ -128,16 +98,16 @@ void Board::UpdateGameResult(int i_X, int i_Y, MoveType i_moveType)
 	}
 }
 
-void Board::Update(int i_X, int i_Y, MoveType i_moveType)
+void Board::Update(int i_x, int i_y, MoveType i_moveType)
 {
-	m_boardData[i_X][i_Y] = i_moveType;
+	m_boardData[i_x][i_y] = i_moveType;
 	++m_movesPlayed;
-	UpdateGameResult(i_X, i_Y, i_moveType);
+	UpdateGameResult(i_x, i_y, i_moveType);
 }
 
-bool Board::ValidateMove(int i_X, int i_Y)
+bool Board::ValidateMove(int i_x, int i_y)
 {
-	MoveType valueCurrentPlay = m_boardData[i_X][i_Y];
+	MoveType valueCurrentPlay = m_boardData[i_x][i_y];
 	if (valueCurrentPlay == MoveType::X || valueCurrentPlay == MoveType::O)
 	{
 		return false;
