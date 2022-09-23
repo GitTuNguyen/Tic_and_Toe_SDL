@@ -65,10 +65,10 @@ void Game::Update()
 		GameResult gameResult = m_board->GetGameResult();
 		if (gameResult == GameResult::NONE)
 		{
-			if (m_inputManager->getIsMouseUp())
+			if (m_inputManager->IsMouseUp())
 			{
-				int mouseX = m_inputManager->getMouseX();
-				int mouseY = m_inputManager->getMouseY();
+				int mouseX = m_inputManager->GetMouseX();
+				int mouseY = m_inputManager->GetMouseY();
 				if (mouseX % TABLE_CELL_SIZE != 0 && mouseY % TABLE_CELL_SIZE != 0 && m_board->ValidateMove(floor(mouseY / TABLE_CELL_SIZE), floor(mouseX / TABLE_CELL_SIZE)))
 				{
 					UpdateMove(floor(mouseY / TABLE_CELL_SIZE), floor(mouseX / TABLE_CELL_SIZE));
@@ -78,10 +78,10 @@ void Game::Update()
 		}
 		else {
 			DrawGameOverScreen();			
-			if (m_inputManager->getIsMouseUp())
+			if (m_inputManager->IsMouseUp())
 			{
-				int mouseX = m_inputManager->getMouseX();
-				int mouseY = m_inputManager->getMouseY();
+				int mouseX = m_inputManager->GetMouseX();
+				int mouseY = m_inputManager->GetMouseY();
 				if (mouseX >= YES_BUTTON_X && mouseX <= YES_BUTTON_X + YES_BUTTON_WIDTH && mouseY >= YES_BUTTON_Y && mouseY <= YES_BUTTON_Y + YES_BUTTON_HEIGHT)
 				{
 					CreateNewMatch();

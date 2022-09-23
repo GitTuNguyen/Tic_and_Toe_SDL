@@ -6,14 +6,13 @@ class InputManager
 public:
 	InputManager();
 	void UpdateInput();
-	int getMouseX();
-	int getMouseY();
+	int GetMouseX();
+	int GetMouseY();
 	bool IsGoingToQuit();
-	bool getIsMouseUp();
+	bool IsMouseUp();
 private:
-	SDL_Event mainEvent;
 	int m_mouseX;
 	int m_mouseY;
-	bool m_isQuit;
+	bool m_isGoingToQuit;
 	bool m_isMouseUp;
 };
