@@ -1,7 +1,5 @@
-/*player board play*/
 #pragma once
 #include "Game.h"
-#include "Board.h"
 
 Game::Game()
 {
@@ -20,18 +18,6 @@ Game::Game()
 void Game::CreateNewMatch()
 {
 	m_board->Reset();
-}
-
-void Game::Rematch(int i_mouse_X, int i_mouse_Y)
-{
-	
-	if (i_mouse_X >= YES_CELL_X && i_mouse_X <= YES_CELL_X + YES_CELL_WIDTH && i_mouse_Y >= YES_CELL_Y && i_mouse_Y <= YES_CELL_Y + YES_CELL_HEIGHT)
-	{
-		CreateNewMatch();
-	}
-	else if (i_mouse_X >= NO_CELL_X && i_mouse_X <= NO_CELL_X + NO_CELL_WIDTH && i_mouse_Y >= NO_CELL_Y && i_mouse_Y <= NO_CELL_Y + NO_CELL_HEIGHT) {
-		m_isPlayerWantExit = true;
-	}
 }
 
 void Game::DrawBoad()
@@ -75,11 +61,11 @@ void Game::Update()
 		m_renderer->PreRendering();
 		m_renderer->DrawTable();
 		m_inputManager->UpdateInput();
-		m_isPlayerWantExit = m_inputManager->getIsQuit();
+		m_isPlayerWantExit = m_inputManager->IsGoingToQuit();
 		GameResult gameResult = m_board->GetGameResult();
 		if (gameResult == GameResult::NONE)
 		{
-			if (m_inputManager->getIsMouseDown())
+			if (m_inputManager->getIsMouseUp())
 			{
 				int mouseX = m_inputManager->getMouseX();
 				int mouseY = m_inputManager->getMouseY();
@@ -92,9 +78,17 @@ void Game::Update()
 		}
 		else {
 			DrawGameOverScreen();			
-			if (m_inputManager->getIsMouseDown())
+			if (m_inputManager->getIsMouseUp())
 			{
-				Rematch(m_inputManager->getMouseX(), m_inputManager->getMouseY());
+				int mouseX = m_inputManager->getMouseX();
+				int mouseY = m_inputManager->getMouseY();
+				if (mouseX >= YES_BUTTON_X && mouseX <= YES_BUTTON_X + YES_BUTTON_WIDTH && mouseY >= YES_BUTTON_Y && mouseY <= YES_BUTTON_Y + YES_BUTTON_HEIGHT)
+				{
+					CreateNewMatch();
+				}
+				else if (mouseX >= NO_BUTTON_X && mouseX <= NO_BUTTON_X + NO_BUTTON_WIDTH && mouseY >= NO_BUTTON_Y && mouseY <= NO_BUTTON_Y + NO_BUTTON_HEIGHT) {
+					m_isPlayerWantExit = true;
+				}
 			}
 		}
 		m_renderer->PostFrame();

@@ -161,7 +161,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Board.h" />
     <ClInclude Include="Source\Game.h" />
-    <ClInclude Include="Source\GameConst.h" />
+    <ClInclude Include="Source\GameDefinitions.h" />
     <ClInclude Include="Source\InputManager.h" />
     <ClInclude Include="Source\Renderer.h" />
   </ItemGroup>

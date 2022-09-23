@@ -89,16 +89,16 @@ void Renderer::DrawGameOverPopup()
 	
 	DrawText("PLAY AGAIN?", TEXT_PLAY_AGAIN_SIZE, TEXT_PLAY_AGAIN_X, TEXT_PLAY_AGAIN_Y, TEXT_PLAY_AGAIN_HEIGHT, TEXT_PLAY_AGAIN_WIDTH);
 
-	newRect.w = YES_CELL_WIDTH;
-	newRect.h = YES_CELL_HEIGHT;
-	newRect.x = YES_CELL_X;
-	newRect.y = YES_CELL_Y;
+	newRect.w = YES_BUTTON_WIDTH;
+	newRect.h = YES_BUTTON_HEIGHT;
+	newRect.x = YES_BUTTON_X;
+	newRect.y = YES_BUTTON_Y;
 	SDL_RenderCopy(m_sdlRenderer, m_loadedTextures["YES"], NULL, &newRect);
 
-	newRect.w = NO_CELL_WIDTH;
-	newRect.h = NO_CELL_HEIGHT;
-	newRect.x = NO_CELL_X;
-	newRect.y = NO_CELL_Y;
+	newRect.w = NO_BUTTON_WIDTH;
+	newRect.h = NO_BUTTON_HEIGHT;
+	newRect.x = NO_BUTTON_X;
+	newRect.y = NO_BUTTON_Y;
 	SDL_RenderCopy(m_sdlRenderer, m_loadedTextures["NO"], NULL, &newRect);
 }
 

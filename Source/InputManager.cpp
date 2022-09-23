@@ -5,11 +5,13 @@ InputManager::InputManager()
 	m_mouseX = 0;
 	m_mouseY = 0;
 	m_isQuit = false;
-	m_isMouseDown = false;
+	m_isMouseUp = false;
 }
 
 void InputManager::UpdateInput()
 {
+	m_mouseX = 0;
+	m_mouseY = 0;
 	while (SDL_PollEvent(&mainEvent))
 	{
 		switch (mainEvent.type)
@@ -21,14 +23,15 @@ void InputManager::UpdateInput()
 		}
 		case SDL_MOUSEBUTTONDOWN:
 		{
-			m_isMouseDown = true;
-			
+			m_isMouseUp = false;
+			break;
 		}
 		case SDL_MOUSEBUTTONUP:
 		{
+			m_isMouseUp = true;
 			m_mouseX = mainEvent.motion.x;
 			m_mouseY = mainEvent.motion.y;
-			m_isMouseDown = false;
+			break;
 		}
 		default:
 		{
@@ -48,12 +51,12 @@ int InputManager::getMouseY()
 	return m_mouseY;
 }
 
-bool InputManager::getIsQuit()
+bool InputManager::IsGoingToQuit()
 {
 	return m_isQuit;
 }
 
-bool InputManager::getIsMouseDown()
+bool InputManager::getIsMouseUp()
 {
-	return m_isMouseDown;
+	return m_isMouseUp;
 }
