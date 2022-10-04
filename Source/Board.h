@@ -35,13 +35,9 @@ struct Direction {
 	}
 };
 
-class Board {	
-private:
-	MoveType** m_boardData;
-	GameResult m_gameResult;
-	size_t m_movesPlayed;
+class Board {
 public:
-	Board();
+	Board(int i_boardCollum, int i_boardRow);
 	void Reset();
 	GameResult GetGameResult();
 	MoveType** GetBoardData();
@@ -49,4 +45,10 @@ public:
 	int CountSameMoveByDirection(int startCellX, int startCellY, Direction i_dir, int maxStep = 4);
 	void UpdateGameResult(int i_startCellX, int i_startCellY, MoveType i_moveType);
 	bool ValidateMove(int i_X, int i_Y);
+private:
+	MoveType** m_boardData;
+	GameResult m_gameResult;
+	size_t m_movesPlayed;
+	int m_boardCollum;
+	int m_boardRow; 
 };

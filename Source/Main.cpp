@@ -1,10 +1,11 @@
 #include "Game.h"
 
-void main()
+int SDL_main(int argc, char* argv[])
 {
 	Game* game = new Game();
 
 	game->Update();
 
 	delete game;
+	return 0;
 }

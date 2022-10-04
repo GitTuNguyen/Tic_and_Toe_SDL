@@ -18,10 +18,20 @@ public:
 	void CleanUp();
 	void LoadTexture(string i_imageName);
 	void PreRendering();
+	int GetWindowHeight();
+	int GetWindowWidth();
+	int GetBoardCollum();
+	int GetBoardRow();
+	int GetCellSize();
 private:
 	SDL_Window* m_window = NULL;
 	SDL_Renderer* m_sdlRenderer = NULL;
 	TTF_Font* m_mainFont = NULL;
+	int m_windowHeight;
+	int m_windowWidth;
+	int m_boardCollum;
+	int m_boardRow; 
+	int m_cellSize;
 	map<string, SDL_Texture*> m_loadedTextures;
 };
 

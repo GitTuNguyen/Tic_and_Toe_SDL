@@ -2,9 +2,9 @@
 #include "Game.h"
 
 Game::Game()
-{
-	m_board = new Board();
+{	
 	m_renderer = new Renderer();
+	m_board = new Board(m_renderer->GetBoardCollum(), m_renderer->GetBoardRow());	
 	m_inputManager = new InputManager();
 	m_currentMoveType = MoveType::X;
 	m_isPlayerWantExit = false;
@@ -24,18 +24,17 @@ void Game::DrawBoad()
 {
 
 	MoveType** boardData = m_board->GetBoardData();
-	for (int i = 0; i < TABLE_ROW; i++)
+	for (int i = 0; i < m_renderer->GetBoardRow(); i++)
 	{
-		for (int j = 0; j < TABLE_COL; j++)
+		for (int j = 0; j < m_renderer->GetBoardCollum(); j++)
 		{
-			m_renderer->DrawCell(boardData[i][j], j * TABLE_CELL_SIZE, i * TABLE_CELL_SIZE);
+			m_renderer->DrawCell(boardData[i][j], j * m_renderer->GetCellSize(), i * m_renderer->GetCellSize());
 		}
 	}
 }
 
-void Game::DrawGameOverScreen()
+void Game::DrawGameResultText()
 {
-	m_renderer->DrawGameOverPopup();
 	std::string game_result;
 	switch (m_board->GetGameResult())
 	{
@@ -51,7 +50,16 @@ void Game::DrawGameOverScreen()
 	default:
 		break;
 	}
-	m_renderer->DrawText(game_result, TEXT_SIZE, TEXT_GAME_RESULT_X, TEXT_GAME_RESULT_Y, TEXT_GAME_RESULT_HEIGHT, TEXT_GAME_RESULT_WIDTH);
+
+	int windowPopupX = (m_renderer->GetWindowWidth() - GAME_OVER_POPUP_WIDTH * m_renderer->GetCellSize()) / 2;
+	int windowPopupY = (m_renderer->GetWindowHeight() - GAME_OVER_POPUP_HEIGHT * m_renderer->GetCellSize()) / 2;
+	m_renderer->DrawText(game_result, TEXT_SIZE, windowPopupX + ((GAME_OVER_POPUP_WIDTH - TEXT_GAME_RESULT_WIDTH) * m_renderer->GetCellSize()) / 2, windowPopupY + m_renderer->GetCellSize() + m_renderer->GetCellSize() / 2, TEXT_GAME_RESULT_HEIGHT * m_renderer->GetCellSize(), TEXT_GAME_RESULT_WIDTH * m_renderer->GetCellSize());
+}
+
+void Game::DrawGameOverScreen()
+{
+	m_renderer->DrawGameOverPopup();
+	DrawGameResultText();	
 }
 
 void Game::Update()
@@ -69,9 +77,9 @@ void Game::Update()
 			{
 				int mouseX = m_inputManager->GetMouseX();
 				int mouseY = m_inputManager->GetMouseY();
-				if (mouseX % TABLE_CELL_SIZE != 0 && mouseY % TABLE_CELL_SIZE != 0 && m_board->ValidateMove(floor(mouseY / TABLE_CELL_SIZE), floor(mouseX / TABLE_CELL_SIZE)))
+				if (mouseX % m_renderer->GetCellSize() != 0 && mouseY % m_renderer->GetCellSize() != 0 && m_board->ValidateMove(floor(mouseY / m_renderer->GetCellSize()), floor(mouseX / m_renderer->GetCellSize())))
 				{
-					UpdateMove(floor(mouseY / TABLE_CELL_SIZE), floor(mouseX / TABLE_CELL_SIZE));
+					UpdateMove(floor(mouseY / m_renderer->GetCellSize()), floor(mouseX / m_renderer->GetCellSize()));
 				}
 			}			
 			DrawBoad();
@@ -82,11 +90,17 @@ void Game::Update()
 			{
 				int mouseX = m_inputManager->GetMouseX();
 				int mouseY = m_inputManager->GetMouseY();
-				if (mouseX >= YES_BUTTON_X && mouseX <= YES_BUTTON_X + YES_BUTTON_WIDTH && mouseY >= YES_BUTTON_Y && mouseY <= YES_BUTTON_Y + YES_BUTTON_HEIGHT)
+								
+				int yesButtonX = (m_renderer->GetWindowWidth() - GAME_OVER_POPUP_WIDTH * m_renderer->GetCellSize()) / 2 + m_renderer->GetCellSize() * 2;
+				int yesButtonY = (m_renderer->GetWindowHeight() - GAME_OVER_POPUP_HEIGHT * m_renderer->GetCellSize()) / 2 + m_renderer->GetCellSize() * 3 + m_renderer->GetCellSize() / 2;
+				int noButtonX = yesButtonX + m_renderer->GetCellSize() * 2;
+				int noButtonY = yesButtonY;
+
+				if (mouseX >= yesButtonX && mouseX <= yesButtonX + YES_BUTTON_WIDTH * m_renderer->GetCellSize() && mouseY >= yesButtonY && mouseY <= yesButtonY + YES_BUTTON_HEIGHT * m_renderer->GetCellSize())
 				{
 					CreateNewMatch();
 				}
-				else if (mouseX >= NO_BUTTON_X && mouseX <= NO_BUTTON_X + NO_BUTTON_WIDTH && mouseY >= NO_BUTTON_Y && mouseY <= NO_BUTTON_Y + NO_BUTTON_HEIGHT) {
+				else if (mouseX >= noButtonX && mouseX <= noButtonX + NO_BUTTON_WIDTH * m_renderer->GetCellSize() && mouseY >= noButtonY && mouseY <= noButtonY + NO_BUTTON_HEIGHT * m_renderer->GetCellSize()) {
 					m_isPlayerWantExit = true;
 				}
 			}

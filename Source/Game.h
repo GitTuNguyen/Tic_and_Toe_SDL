@@ -11,6 +11,7 @@ public:
 private:
 	void DrawBoad();
 	void DrawGameOverScreen();
+	void DrawGameResultText();
 	void CreateNewMatch();
 	void UpdateMove(int i_X, int i_Y);
 	Board* m_board;
