@@ -45,10 +45,12 @@ public:
 	int CountSameMoveByDirection(int startCellX, int startCellY, Direction i_dir, int maxStep = 4);
 	void UpdateGameResult(int i_startCellX, int i_startCellY, MoveType i_moveType);
 	bool ValidateMove(int i_X, int i_Y);
+	int GetBoardColumn();
+	int GetBoardRow();
 private:
 	MoveType** m_boardData;
 	GameResult m_gameResult;
 	size_t m_movesPlayed;
-	int m_boardCollum;
+	int m_boardColumn;
 	int m_boardRow; 
 };

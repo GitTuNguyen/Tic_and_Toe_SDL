@@ -4,7 +4,18 @@
 Game::Game()
 {	
 	m_renderer = new Renderer();
-	m_board = new Board(m_renderer->GetBoardCollum(), m_renderer->GetBoardRow());	
+	int boardColumn;
+	int boardRow;
+	if (m_renderer->GetWindowHeight() > m_renderer->GetWindowWidth())
+	{
+		boardColumn = BOARD_MIN_DIMENSION;
+		boardRow = m_renderer->GetWindowHeight() / m_renderer->GetCellSize();
+	}
+	else {
+		boardRow = BOARD_MIN_DIMENSION;
+		boardColumn = m_renderer->GetWindowWidth() / m_renderer->GetCellSize();
+	}
+	m_board = new Board(boardColumn, boardRow);
 	m_inputManager = new InputManager();
 	m_currentMoveType = MoveType::X;
 	m_isPlayerWantExit = false;
@@ -24,9 +35,9 @@ void Game::DrawBoad()
 {
 
 	MoveType** boardData = m_board->GetBoardData();
-	for (int i = 0; i < m_renderer->GetBoardRow(); i++)
+	for (int i = 0; i < m_board->GetBoardRow(); i++)
 	{
-		for (int j = 0; j < m_renderer->GetBoardCollum(); j++)
+		for (int j = 0; j < m_board->GetBoardColumn(); j++)
 		{
 			m_renderer->DrawCell(boardData[i][j], j * m_renderer->GetCellSize(), i * m_renderer->GetCellSize());
 		}
@@ -67,7 +78,7 @@ void Game::Update()
 	while (!m_isPlayerWantExit)
 	{
 		m_renderer->PreRendering();
-		m_renderer->DrawTable();
+		m_renderer->DrawTable(m_board->GetBoardColumn(), m_board->GetBoardRow());
 		m_inputManager->UpdateInput();
 		m_isPlayerWantExit = m_inputManager->IsGoingToQuit();
 		GameResult gameResult = m_board->GetGameResult();

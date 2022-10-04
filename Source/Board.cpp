@@ -2,7 +2,7 @@
 
 Board::Board( int i_boardCollum, int i_boardRow)
 {
-	m_boardCollum = i_boardCollum;
+	m_boardColumn = i_boardCollum;
 	m_boardRow = i_boardRow;
 	Reset();
 }
@@ -16,11 +16,11 @@ void Board::Reset()
 {
 	m_boardData = (MoveType**)malloc(sizeof(MoveType*) * m_boardRow);
 	for (int i = 0; i < m_boardRow; i++) {
-		m_boardData[i] = (MoveType*)malloc(sizeof(MoveType) * m_boardCollum);
+		m_boardData[i] = (MoveType*)malloc(sizeof(MoveType) * m_boardColumn);
 	}
 	for (int i = 0; i < m_boardRow ; i++)
 	{
-		for (int j = 0; j < m_boardCollum; j++)
+		for (int j = 0; j < m_boardColumn; j++)
 		{
 			m_boardData[i][j] = MoveType::UNDEFINED;
 		}
@@ -42,7 +42,7 @@ int Board::CountSameMoveByDirection(int i_startCellX, int i_startCellY, Directio
 	{
 		int nextCellX = i_startCellX + i_dir.x * i;
 		int nextCellY = i_startCellY + i_dir.y * i;
-		if (nextCellX < 0 || nextCellX >= m_boardRow || nextCellY < 0 || nextCellY >= m_boardCollum)
+		if (nextCellX < 0 || nextCellX >= m_boardRow || nextCellY < 0 || nextCellY >= m_boardColumn)
 		{
 			break;
 		}
@@ -90,7 +90,7 @@ void Board::UpdateGameResult(int i_startCellX, int i_startCellY, MoveType i_move
 			m_gameResult = GameResult::O_WIN;
 		}
 	}
-	else if (m_movesPlayed == (m_boardCollum * m_boardRow))
+	else if (m_movesPlayed == (m_boardColumn * m_boardRow))
 	{
 		m_gameResult = GameResult::DRAW;
 	}
@@ -115,4 +115,14 @@ bool Board::ValidateMove(int i_x, int i_y)
 		return false;
 	}
 	return true;
+}
+
+int Board::GetBoardColumn()
+{
+	return m_boardColumn;
+}
+
+int Board::GetBoardRow()
+{
+	return m_boardRow;
 }

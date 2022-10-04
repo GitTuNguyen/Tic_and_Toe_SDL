@@ -21,16 +21,7 @@ Renderer::Renderer()
 	SDL_GetCurrentDisplayMode(0, &MD);
 	m_windowHeight = MD.h;
 	m_windowWidth = MD.w;
-	if (m_windowHeight > m_windowWidth)
-	{
-		m_boardCollum = TABLE_WIDTH;
-		m_cellSize = m_windowWidth / TABLE_WIDTH;
-		m_boardRow = m_windowHeight / m_cellSize;
-	} else {
-		m_boardRow = TABLE_WIDTH;
-		m_cellSize = m_windowHeight / TABLE_WIDTH;
-		m_boardCollum = m_windowWidth / m_cellSize;
-	}
+	m_cellSize = (std::min)(m_windowHeight, m_windowWidth) / BOARD_MIN_DIMENSION;
 	m_window = SDL_CreateWindow("Tic And Toe - SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, m_windowWidth , m_windowHeight, SDL_WINDOW_FULLSCREEN);
 	if (m_window == NULL)
 	{
@@ -44,7 +35,7 @@ Renderer::Renderer()
 		printf("Could not create render %s", SDL_GetError());
 		return;
 	}
-	//SDL_RenderSetLogicalSize(m_sdlRenderer, WINDOW_WIDTH, WINDOW_HEIGHT);
+	
 	if (TTF_Init() < 0)
 	{
 		SDL_Log("%s", TTF_GetError());
@@ -52,7 +43,7 @@ Renderer::Renderer()
 	}
 
 	m_mainFont = TTF_OpenFont("Data/font.ttf", TEXT_SIZE);
-	SDL_SetHintWithPriority("SDL_ANDROID_TRAP_BACK_BUTTON", "0",SDL_HINT_OVERRIDE);
+	
 }
 
 void Renderer::DrawCell(MoveType i_cellType, int i_pixelX, int i_pixelY)
@@ -125,15 +116,15 @@ void Renderer::PreRendering()
 	SDL_SetRenderDrawColor(m_sdlRenderer, 0, 0, 0, 255);
 	SDL_RenderClear(m_sdlRenderer);
 }
-void Renderer::DrawTable()
+void Renderer::DrawTable(int i_boardColumn, int i_boardRow)
 {
 	SDL_SetRenderDrawColor(m_sdlRenderer, 255, 255, 255, 255);
 	SDL_Point startPoint = { 0, 0 };
 	SDL_Point endPoint = { 0, 0 };
-	for (int i = 0; i <= m_boardCollum; i++)
+	for (int i = 0; i <= i_boardColumn; i++)
 	{
 		int lineXPos = i * m_cellSize;
-		if (i == m_boardCollum)
+		if (i == i_boardColumn)
 		{
 			--lineXPos;
 		}
@@ -141,10 +132,10 @@ void Renderer::DrawTable()
 		endPoint = { lineXPos, m_windowHeight};
 		SDL_RenderDrawLine(m_sdlRenderer, startPoint.x, startPoint.y, endPoint.x, endPoint.y);
 	}
-	for (int i = 0; i <= m_boardRow; i++)
+	for (int i = 0; i <= i_boardRow; i++)
 	{
 		int lineYPos = i * m_cellSize;
-		if (i == m_boardRow)
+		if (i == i_boardRow)
 		{
 			--lineYPos;
 		}
@@ -192,16 +183,6 @@ int Renderer::GetWindowHeight()
 int Renderer::GetWindowWidth()
 {
 	return m_windowWidth;
-}
-
-int Renderer::GetBoardCollum()
-{
-	return m_boardCollum;
-}
-
-int Renderer::GetBoardRow()
-{
-	return m_boardRow;
 }
 
 int Renderer::GetCellSize()
