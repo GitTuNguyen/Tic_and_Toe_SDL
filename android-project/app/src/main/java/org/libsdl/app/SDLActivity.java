@@ -59,6 +59,9 @@ import java.util.Locale;
 */
 public class SDLActivity extends Activity implements View.OnSystemUiVisibilityChangeListener {
     private static final String TAG = "SDL";
+    private static final int SDL_MAJOR_VERSION = 2;
+    private static final int SDL_MINOR_VERSION = 25;
+    private static final int SDL_MICRO_VERSION = 0;
 /*
     // Display InputType.SOURCE/CLASS of events and devices
     //
@@ -342,8 +345,18 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
             errorMsgBrokenLib = e.getMessage();
         }
 
-        if (mBrokenLibraries)
-        {
+        if (!mBrokenLibraries) {
+            String expected_version = String.valueOf(SDL_MAJOR_VERSION) + "." +
+                                      String.valueOf(SDL_MINOR_VERSION) + "." +
+                                      String.valueOf(SDL_MICRO_VERSION);
+            String version = nativeGetVersion();
+            if (!version.equals(expected_version)) {
+                mBrokenLibraries = true;
+                errorMsgBrokenLib = "SDL C/Java version mismatch (expected " + expected_version + ", got " + version + ")";
+            }
+        }
+
+        if (mBrokenLibraries) {
             mSingleton = this;
             AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
             dlgAlert.setMessage("An error occurred while trying to start the application. Please try again and/or reinstall."
@@ -384,9 +397,6 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         mLayout = new RelativeLayout(this);
         mLayout.addView(mSurface);
-        //RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(100, 300);
-        //layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-        //mSurface.setLayoutParams(layoutParams);
 
         // Get our current screen orientation and pass it down.
         mCurrentOrientation = SDLActivity.getCurrentOrientation();
@@ -887,6 +897,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     }
 
     // C functions we call
+    public static native String nativeGetVersion();
     public static native int nativeSetupJNI();
     public static native int nativeRunMain(String library, String function, Object arguments);
     public static native void nativeLowMemory();
@@ -1989,10 +2000,7 @@ class SDLInputConnection extends BaseInputConnection {
 
     public static native void nativeCommitText(String text, int newCursorPosition);
 
-    public native void nativeGenerateScancodeForUnichar(char c);
-
-    public native void nativeSetComposingText(String text, int newCursorPosition);
-
+    public static native void nativeGenerateScancodeForUnichar(char c);
 }
 
 class SDLClipboardHandler implements
